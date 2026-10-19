@@ -1,0 +1,111 @@
+{% extends 'infraestructura/base.html' %}
+{% block title %}Detalle - {{ nodo.nombre_host }}{% endblock %}
+{% block content %}
+
+<style>
+    .severidad-baja {
+        background-color: #ffc107 !important;
+        color: #212529 !important;
+    }
+
+    .severidad-media {
+        background-color: #fd7e14 !important;
+        color: white !important;
+    }
+
+    .severidad-alta {
+        background-color: #dc3545 !important;
+        color: white !important;
+    }
+
+    .severidad-critica {
+        background-color: #8b0000 !important;
+        color: white !important;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white py-3">
+                <h4 class="mb-0">Ficha Técnica del Servidor: {{ nodo.nombre_host }}</h4>
+                
+            </div>
+            <div class="card-body p-4">
+                <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">Dirección IP:</span>
+                        <span class="font-monospace text-secondary">{{ nodo.direccion_ip }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">Motor de Contenedores:</span>
+                        <span>{{ nodo.get_motor_contenedores_display }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">Proxy Inverso Nginx:</span>
+                        <span>{% if nodo.proxy_inverso %}Habilitado{% else %}Deshabilitado{% endif %}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">Estado Operativo:</span>
+                        <span>{% if nodo.en_produccion %}<span class="badge bg-success">Producción</span>{% else %}<span
+                                class="badge bg-warning text-dark">Mantenimiento</span>{% endif %}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">Fecha de Despliegue:</span>
+                        <span class="text-muted">{{ nodo.fecha_despliegue|date:"Y-m-d H:i" }}</span>
+                    </li>
+                </ul>
+                                <div class="d-flex justify-content-between">
+                    <a href="{% url 'home_servidores' %}" class="btn btn-outline-secondary">← Volver al Listado</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-header bg-dark text-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Alertas e Incidencias Operativas</h5>
+                <a href="{% url 'registrar_incidencia' nodo.pk %}" class="btn btn-sm btn-danger fw-bold">+ Reportar Incidencia</a>
+            </div>
+            <div class="card-body p-4">
+                {% if incidencias %}
+                <ul class="list-group list-group-flush">
+                    {% for incidencia in incidencias %}
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <span class="fw-bold">{{ incidencia.titulo }}</span>
+                                {% if incidencia.severidad == 'critica' %}
+                                    <span class="badge severidad-critica ms-2">Crítica</span>
+                                {% elif incidencia.severidad == 'alta' %}
+                                    <span class="badge severidad-alta ms-2">Alta</span>
+                                {% elif incidencia.severidad == 'media' %}
+                                    <span class="badge severidad-media ms-2">Media</span>
+                                {% else %}
+                                    <span class="badge severidad-baja ms-2">Baja</span>
+                                {% endif %}
+                                {% if incidencia.resuelta %}
+                                    <span class="badge bg-success ms-1">Resuelta</span>
+                                {% else %}
+                                    <span class="badge bg-danger ms-1">Activa</span>
+                                {% endif %}
+                                <p class="text-muted mb-0 mt-1">{{ incidencia.descripcion }}</p>
+                                <small class="text-muted">Reportada: {{ incidencia.fecha_reporte|date:"Y-m-d H:i" }}</small>
+                            </div>
+                            {% if not incidencia.resuelta %}
+                            <form method="POST" action="{% url 'resolver_incidencia' incidencia.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-success">Marcar Resuelta</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-muted mb-0">Este servidor no tiene incidencias registradas.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
