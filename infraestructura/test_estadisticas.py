@@ -14,3 +14,9 @@ class EstadisticasTests(TestCase):
         self.assertEqual(respuesta.status_code, 200)
         self.assertEqual(respuesta.context['total_servidores'], 2)
         self.assertEqual(respuesta.context['porcentaje_produccion'], 50)
+
+    def test_sin_servidores_no_falla(self):
+        respuesta = self.client.get(reverse('estadisticas'))
+
+        self.assertEqual(respuesta.status_code, 200)
+        self.assertEqual(respuesta.context['porcentaje_produccion'], 0)
