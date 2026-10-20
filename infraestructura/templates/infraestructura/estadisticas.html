@@ -1,0 +1,40 @@
+{% extends 'infraestructura/base.html' %}
+{% block title %}Estadísticas{% endblock %}
+{% block content %}
+<h1 class="text-primary mb-4">Estadísticas de la Flota</h1>
+<div class="row g-3">
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Servidores</h6>
+                <p class="display-6 fw-bold">{{ total_servidores }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center">
+            <div class="card-body">
+                <h6 class="text-muted">En producción</h6>
+                <p class="display-6 fw-bold text-success">{{ porcentaje_produccion }}%</p>
+                <small class="text-muted">{{ en_produccion }} de {{ total_servidores }}</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Incidencias abiertas</h6>
+                <p class="display-6 fw-bold text-danger">{{ incidencias_abiertas }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Mantenimientos pendientes</h6>
+                <p class="display-6 fw-bold text-warning">{{ mantenimientos_pendientes }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

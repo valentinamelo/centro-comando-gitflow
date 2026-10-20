@@ -5,6 +5,9 @@ from .views import (
 MantenimientoListView, MantenimientoDetailView,
 MantenimientoCreateView, MantenimientoUpdateView, MantenimientoDeleteView
 )
+from .views_health import health_check
+from .views_busqueda import buscar_servidores
+from .views_estadisticas import estadisticas
 
 urlpatterns = [
     path('', lista_servidores, name='home_servidores'),
@@ -27,3 +30,7 @@ urlpatterns += [
     path('mantenimientos/<int:pk>/eliminar/', MantenimientoDeleteView.as_view(),
     name='eliminar_mantenimiento'),
 ]
+
+urlpatterns.append(path('health/', health_check, name='health_check'))
+urlpatterns.append(path('buscar/', buscar_servidores, name='buscar_servidores'))
+urlpatterns.append(path('estadisticas/', estadisticas, name='estadisticas'))
