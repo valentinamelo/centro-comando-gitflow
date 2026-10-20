@@ -6,6 +6,7 @@ MantenimientoListView, MantenimientoDetailView,
 MantenimientoCreateView, MantenimientoUpdateView, MantenimientoDeleteView
 )
 from .views_health import health_check
+from .views_busqueda import buscar_servidores
 from .views_estadisticas import estadisticas
 
 urlpatterns = [
@@ -31,4 +32,5 @@ urlpatterns += [
 ]
 
 urlpatterns.append(path('health/', health_check, name='health_check'))
+urlpatterns.append(path('buscar/', buscar_servidores, name='buscar_servidores'))
 urlpatterns.append(path('estadisticas/', estadisticas, name='estadisticas'))
