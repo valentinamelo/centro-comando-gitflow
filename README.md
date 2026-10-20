@@ -401,12 +401,6 @@ El contexto contiene tres valores:
 - `'servicio': 'centro-comando'`: identifica el nombre del servicio.
 - `'servidores_registrados': NodoServidor.objects.count()`: consulta el ORM de Django para contar los registros de `NodoServidor`.
 
-### Nota sobre la plantilla
-
-La guía indica crear el archivo `infraestructura/templates/infraestructura/estadisticas.html`, pero la vista utiliza la ruta `infraestructura/health.html`.
-
-Ambos nombres no coinciden. Para que la vista funcione, debe existir una plantilla con la ruta que realmente se utiliza en `render`, o debe verificarse la correspondencia entre el nombre de la plantilla y el código. Este README conserva el contenido original de la guía y documenta la diferencia para que no pase inadvertida durante la ejecución.
-
 ## 12. Plantilla HTML del estado del servicio
 
 La plantilla de la guía contiene el siguiente código:
@@ -494,8 +488,6 @@ class HealthCheckTests(TestCase):
 - `self.assertEqual(respuesta.context['servicio'], 'centro-comando')`: verifica el nombre del servicio.
 - `self.assertEqual(respuesta.context['servidores_registrados'], 0)`: verifica que el contexto contenga cero servidores en el escenario de prueba.
 - `self.assertContains(respuesta, 'Disponible')`: comprueba que la respuesta contenga el texto `Disponible`.
-
-**Importante:** la prueba supone que la plantilla se llama `infraestructura/health.html`. Por tanto, debe coincidir con el nombre utilizado por la vista.
 
 ## 14. Registrar la ruta `/health/`
 
@@ -590,16 +582,6 @@ Muestra el historial de commits de todas las ramas locales conocidas:
 - `--graph`: representa gráficamente las relaciones entre los commits.
 - `--oneline`: resume cada commit en una sola línea.
 - `--all`: incluye las referencias de todas las ramas locales.
-
-### Pull Request opcional
-
-```bash
-gh pr create --base develop --fill
-```
-
-Este comando de GitHub CLI crea un *pull request* hacia `develop`, utilizando el contenido de la rama actual para completar la información disponible.
-
-La guía presenta este paso como una alternativa para simular el flujo de revisión que se utilizaría en un equipo de desarrollo real.
 
 ---
 
