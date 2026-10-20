@@ -1,0 +1,33 @@
+{% extends 'infraestructura/base.html' %}
+{% block title %}Estado del servicio{% endblock %}
+{% block content %}
+<h1 class="text-primary mb-4">Estado del servicio</h1>
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Estado</h6>
+                <p class="mb-0">
+                    <span class="badge bg-success fs-6">Disponible</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Servicio</h6>
+                <p class="mb-0 fs-5 fw-bold">{{ servicio }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Servidores registrados</h6>
+                <p class="mb-0 fs-5 fw-bold">{{ servidores_registrados }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
