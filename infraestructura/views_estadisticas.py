@@ -4,8 +4,7 @@ from .models import NodoServidor, IncidenciaServidor, MantenimientoNodo
 def estadisticas(request):
     total = NodoServidor.objects.count()
     en_produccion = NodoServidor.objects.filter(en_produccion=True).count()
-    porcentaje_produccion = round(en_produccion * 100 / total)
-
+    porcentaje_produccion = round(en_produccion * 100 / total) if total else 0
     contexto = {
         'total_servidores': total,
         'en_produccion': en_produccion,
